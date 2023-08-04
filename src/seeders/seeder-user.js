@@ -3,11 +3,14 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('users', [{
+      email: 'damelillard@nba.com',
+      password: 'dame00',
       firstName: 'Damian',
       lastName: 'Lillard',
-      email: 'damelillard@nba.com',
-      createdAt: new Date(),
-      updatedAt: new Date()
+      address: 'Oakland',
+      gender: 1,
+      typeRole: 'ROLE',
+      keyRole: 'R1'
     }])
     /**
      * Add seed commands here.
