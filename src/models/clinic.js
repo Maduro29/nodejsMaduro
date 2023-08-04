@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 
     //khong can khai bao id
     Clinic.init({
+        name: DataTypes.STRING,
         address: DataTypes.STRING,
         description: DataTypes.TEXT,
         image: DataTypes.STRING,
