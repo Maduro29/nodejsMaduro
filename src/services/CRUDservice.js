@@ -27,7 +27,7 @@ const createUser = async (data) => {
                 lastName: data.lastName,
                 address: data.address,
                 phoneNumber: data.phoneNumber,
-                gender: data.gender === 1 ? true : false,
+                gender: data.gender === '1' ? true : false,
                 roleId: data.roleId,
             })
         } catch (e) {
@@ -37,6 +37,20 @@ const createUser = async (data) => {
     console.log(hass)
 }
 
+const getAllUser = (req, res) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let listUsers = await db.users.findAll({
+                raw: true
+            });
+            resolve(listUsers);
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
-    createUser: createUser
+    createUser: createUser,
+    getAllUser: getAllUser
 }

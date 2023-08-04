@@ -26,9 +26,18 @@ const postCRUD = (req, res) => {
     return res.send('hi');
 }
 
+const readCRUD = async (req, res) => {
+    let listUsers = await CRUDservice.getAllUser();
+    console.log(listUsers)
+    return res.render('test/readcrud.ejs', {
+        data: listUsers
+    });
+}
+
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
     getCRUD: getCRUD,
-    postCRUD: postCRUD
+    postCRUD: postCRUD,
+    readCRUD: readCRUD
 }
