@@ -47,6 +47,18 @@ const editDoneCRUD = async (req, res) => {
     return res.send('oke');
 }
 
+const deleteCRUD = async (req, res) => {
+    let user = await CRUDservice.getUserById(req.query);
+    return res.render('test/deletecrud.ejs', {
+        data: user
+    });
+}
+
+const deleteDoneCRUD = async (req, res) => {
+    await CRUDservice.deleteDoneCRUD(req.query);
+    return res.send('oke');
+}
+
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
@@ -54,5 +66,7 @@ module.exports = {
     postCRUD: postCRUD,
     readCRUD: readCRUD,
     editCRUD: editCRUD,
-    editDoneCRUD: editDoneCRUD
+    editDoneCRUD: editDoneCRUD,
+    deleteCRUD: deleteCRUD,
+    deleteDoneCRUD: deleteDoneCRUD
 }

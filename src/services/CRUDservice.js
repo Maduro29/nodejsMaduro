@@ -84,9 +84,23 @@ const editDoneCRUD = (data) => {
     })
 }
 
+const deleteDoneCRUD = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.users.destroy({
+                where: { id: data.id },
+            });
+            resolve();
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     createUser: createUser,
     getAllUser: getAllUser,
     getUserById: getUserById,
-    editDoneCRUD: editDoneCRUD
+    editDoneCRUD: editDoneCRUD,
+    deleteDoneCRUD: deleteDoneCRUD
 }
