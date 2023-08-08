@@ -34,10 +34,25 @@ const readCRUD = async (req, res) => {
     });
 }
 
+const editCRUD = async (req, res) => {
+    let user = await CRUDservice.getUserById(req.query);
+    return res.render('test/editcrud.ejs', {
+        data: user
+    });
+}
+
+const editDoneCRUD = async (req, res) => {
+    console.log(req.query)
+    await CRUDservice.editDoneCRUD(req.query);
+    return res.send('oke');
+}
+
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
     getCRUD: getCRUD,
     postCRUD: postCRUD,
-    readCRUD: readCRUD
+    readCRUD: readCRUD,
+    editCRUD: editCRUD,
+    editDoneCRUD: editDoneCRUD
 }

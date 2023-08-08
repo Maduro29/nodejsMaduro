@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import db from '../models';
+import { resolveInclude } from 'ejs';
 
 const hassPassword = async (password) => {
     // generate crypt
@@ -37,7 +38,7 @@ const createUser = async (data) => {
     console.log(hass)
 }
 
-const getAllUser = (req, res) => {
+const getAllUser = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let listUsers = await db.users.findAll({
@@ -50,7 +51,42 @@ const getAllUser = (req, res) => {
     })
 }
 
+const getUserById = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.users.findOne({
+                where: { id: data.id },
+                raw: true
+            })
+            resolve(user);
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+const editDoneCRUD = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.users.findOne({
+                where: { id: data.id },
+            });
+            user.firstName = data.firstName;
+            user.lastName = data.lastName;
+            user.address = data.address;
+            user.phoneNumber = data.phoneNumber;
+            user.gender = data.gender;
+            await user.save();
+            resolve();
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     createUser: createUser,
-    getAllUser: getAllUser
+    getAllUser: getAllUser,
+    getUserById: getUserById,
+    editDoneCRUD: editDoneCRUD
 }
