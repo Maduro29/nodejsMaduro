@@ -11,9 +11,11 @@ const handleLogin = (email, password) => {
                 let user = await db.users.findOne({
                     where: { email: email },
                     raw: true,
+                    attributes: {
+                        exclude: 'password'
+                    }
                 })
                 const checkPassword = compareSync(password, user.password);
-                delete user.password;
                 if (checkPassword) {
                     data.errCode = 0;
                     data.message = 'ok';
@@ -26,7 +28,10 @@ const handleLogin = (email, password) => {
                 data.errCode = 2;
                 data.message = `Email doesn't exist`;
             }
-            resolve(data)
+            resolve({
+                status: (!data.errCode ? 200 : 500),
+                data: data
+            })
         } catch (e) {
             reject(e)
         }
@@ -50,6 +55,34 @@ const checkEmail = (email) => {
     })
 }
 
+const getUsers = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = ''
+            if (id === 'ALL') {
+                users = await db.users.findAll({
+                    raw: true,
+                    attributes: {
+                        exclude: 'password'
+                    }
+                })
+            } else if (id) {
+                users = await db.users.findOne({
+                    where: { id: 1 },
+                    raw: true,
+                    attributes: {
+                        exclude: 'password'
+                    }
+                })
+            }
+            resolve(users);
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
-    handleLogin: handleLogin
+    handleLogin: handleLogin,
+    getUsers: getUsers
 }
