@@ -35,7 +35,7 @@ const createUser = async (data) => {
             reject(e)
         }
     })
-    console.log(hass)
+    // console.log(hass)
 }
 
 const getAllUser = () => {

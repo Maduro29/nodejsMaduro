@@ -17,7 +17,7 @@ const handleLogin = async (req, res) => {
 }
 
 const getUsers = async (req, res) => {
-    let id = req.body.id;
+    let id = req.query.id;
     if (!id) {
         return res.status(500).json({
             errCode: 1,
@@ -36,7 +36,34 @@ const getUsers = async (req, res) => {
     });
 }
 
+const createUser = async (req, res) => {
+    let result = await userService.createUser(req.body);
+    return res.status(200).json({
+        errCode: result.errCode,
+        message: result.message
+    })
+}
+
+const editUser = async (req, res) => {
+    let result = await userService.editUser(req.body);
+    return res.status(200).json(result)
+}
+
+const deleteUser = async (req, res) => {
+    if (!req.body.id) {
+        return res.status(200).json({
+            errCode: 1,
+            message: "Missing parameters!"
+        })
+    }
+    let result = await userService.deleteUser(req.body.id);
+    return res.status(200).json(result);
+}
+
 module.exports = {
     handleLogin: handleLogin,
-    getUsers: getUsers
+    getUsers: getUsers,
+    createUser: createUser,
+    editUser: editUser,
+    deleteUser: deleteUser
 }
