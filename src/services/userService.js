@@ -136,8 +136,6 @@ const editUser = (data) => {
                 user.firstName = data.firstName;
                 user.lastName = data.lastName;
                 user.address = data.address;
-                user.phoneNumber = data.phoneNumber;
-                user.gender = data.gender;
 
                 await user.save();
 
